@@ -1,0 +1,66 @@
+extend ../../layouts/default.pug
+block main
+    - if (messages.info)
+     .message.info
+        div(class="alert alert-primary" role="alert" showalert data-time = "5000" style="width : 100px") #{messages.info} <span>x</span>
+    h2 trang product
+    each item in fillerStatus 
+        button(class = item.class status = item.status btn_fillerstatus) #{item.name}
+    form(inputSearch)
+        input(type="text" value = valueInputsearch)
+        input(type="submit")
+    form(changemulti action = `${url_Adm}/product/changemulti?_method=PATCH` method="POST")
+        select(name ="type" selectop) 
+            option(value="active") active
+            option(value="inactive") inactive
+        input(type = "text" name = "getids" getids value = "")
+        button click
+    a(href = `${url_Adm}/product/create`) tạo mới
+    table(tableproduct)
+        thead
+            tr 
+                th
+                    input(type="checkbox" checkboxall)
+                th stt
+                th title
+                th image
+                th price 
+                th status 
+                th position 
+                th tool
+
+        tbody
+
+           each item,index in dbproduct 
+            tr
+
+                td      
+                    input(type = "checkbox" checkbox getIdcbox = item._id)
+                td #{index+1}
+                td #{item.title}
+                td 
+                    img(src=item.images alt = item.description)
+                td #{item.price}
+                td
+                    if(item.status == "active") 
+                        button(getStatus = item.status getId = item._id btn_status class = "active") hoạt động
+                    else 
+                        button(getStatus = item.status getId = item._id btn_status class="inactive") k hoạt động
+                td 
+                    input(type = "number" min = "1" value=item.position style="width : 60px; text-align:center")
+                td 
+                    a(href=`${url_Adm}/product/detail/${item.id}`) chi tiết
+                    a(href=`${url_Adm}/product/edit/${item._id}`) sửa
+                    button(btn_one id_item = item._id)  xóa
+    
+    h3( style = boleancount == false ? "":"display:none") k tìm thấy sản phảm nào
+
+    if(page.current > 1)
+        button(pagination_btn idpagin=page.current-1)  trang trước
+    - for(let i = 0; i < countpagination;i++)
+        button(pagination_btn idpagin=i+1 class = (i+1 == page.current ? "active": "")) #{i+1}
+    if(page.current < countpagination)
+        button(pagination_btn idpagin = page.current+1)  trang tiếp
+    form(action = "" data_path =   `${url_Adm}/product/delete` method = "POST" form_deleteone )
+    form(action = ""  data_path =  `${url_Adm}/product/editstatus` method="POST" form_Editstatus)
+    script(src="../../../../js/product.js") 

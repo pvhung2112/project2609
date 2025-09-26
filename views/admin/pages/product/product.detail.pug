@@ -1,0 +1,12 @@
+extend ../../layouts/default.pug 
+block main
+    h2 trang detail
+    if(detailproduct.title)
+        div #{detailproduct.title}
+    if(detailproduct.status)
+        div 
+            span trạng thái 
+            if(detailproduct.status == "active")
+                span hoạt đông 
+            else 
+                span k hoạt đông

@@ -1,0 +1,39 @@
+extend ../../layouts/default.pug
+block main
+    - if (messages.info)
+     .message.info
+        div(class="alert alert-primary" role="alert" showalert data-time = "5000" style="width : 100px") #{messages.info} <span>x</span>
+    form(id = "create-product" action = `${url_Adm}/product/create?_method=POST` method= "POST" enctype="multipart/form-data")
+        div 
+            label(for="title") tên sản phẩm
+            input(name="title" id="title" type="text") 
+        div 
+            label(for = "brand") hãng
+            input(name="brand" id="brand" type="text")
+        div 
+            label(for="discountPercentage") giảm giá
+            input(name="discountPercentage" id="discountPercentage" type="number" min= "1")
+        div 
+            label(for="price") giá cũ
+            input(name="price" id="rice" type="number" min="1")
+       
+            label(for="imagesinput") image 
+            input(name="images" id="imagesinput" type="file" accept="image/*")
+            div(class = "box-images" box-images )
+                img(src = "" img-priview)
+                span(huyBtn-img) x
+        div 
+            label(for="status") trạng thái
+            input(type="radio" id="status" name ="status" value = "active" ) 
+            |active
+            input(type="radio" id="status" name="status" value = "inactive" ) 
+            |inactive
+        div 
+            label(for="position") vi trí
+            input(type="number" id="position" name ="position" min="1") 
+        div 
+            button(btn_saveproduct) save
+        script(src="../../../../js/product.js")
+   
+        
+   
